@@ -1,5 +1,5 @@
 import Button from "./components/Button"
-import ReactofyLink from "./components/Link"
+import CustomLink from "./components/Link"
 
 
-export {Button,ReactofyLink};
+export {Button,CustomLink};
