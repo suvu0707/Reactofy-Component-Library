@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Button() {
+function Button(props) {
   return (
-    <button>Save</button>
+    <button style={{color:props.color}}>{props.text}</button>
   )
 }
 
