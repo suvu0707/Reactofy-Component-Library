@@ -1,5 +1,5 @@
 import Button from "./components/Button"
-import CustomLink from "./components/Link"
+import MyCustomLink from "./components/Link"
 
 
-export {Button,CustomLink};
+export {Button,MyCustomLink};
