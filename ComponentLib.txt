@@ -76,7 +76,7 @@ Step 4- Changing the package.json for publishing our component and it should loo
 Step 5- Publish the component
 
 - Run the below commands in your terminal to publish it.
-  > npm login
+  > npm login : username:suvu0707/password:lai@123456
   > npm publish
 
 Step 6- Your're good to go with the new package to use.
