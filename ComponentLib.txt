@@ -81,6 +81,17 @@ Step 5- Publish the component
 
 Step 6- Your're good to go with the new package to use.
 
+Step 7- To update Newer version 1st change verson no in package.json then run this command.
+     npm publish --access public
+
+     for import use=> npm i libraryname@versionNo
+
+
+**If u are maintaining your repo in git then commit all changes before npm publish **
+
+
+
+
 ## How to Work with NPM Packages locally Using .tgz Files
 
 Step 1- Run the below command in your terminal after Step 4 of the above topic :-
@@ -90,3 +101,7 @@ Step 1- Run the below command in your terminal after Step 4 of the above topic :
 - This will generate a .tgz file at the directory’s root with a structure like this: {name}-{version}.tgz
 - In the directory of the project that you want to test your NPM package, just run an npm install with the path to your .tgz file.
   => Something like: npm install ../../my-package/my-package-1.1.0.tgz.
+
+
+
+Component used in Git repo redux-toolkit-with-create-reducer

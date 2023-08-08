@@ -1,107 +1,70 @@
-## Source
+# Getting Started with Create React App
 
-https://levelup.gitconnected.com/publish-react-components-as-an-npm-package-7a671a2fb7f
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# How to Publish React components as an npm package
+## Available Scripts
 
-Step 1- Create and isolate components to publish.
+In the project directory, you can run:
 
-- Inside src folder, delete everything besides App.js, app.css, and index.js.
-- Create a folder with the name "lib", where we will be creating everything which later on we will be publishing as an npm.
-- Inside lib folder, we need to create 2 things :-
-  => create one folder by name "components" inside which we will be creating our component files.
-  => and create one file by name index.js, through which we will be exporting our components.
+### `npm start`
 
-Step 2- Creating and Exporting the Component
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-- Inside components folder, create a new file by name componentName.js.
-- Add and export componentName.js file from index.js file.
-  => import componentName.js from "./components/componentName.js";
-  => export { componentName.js };
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-Step 3- Install Babel and build the dist folder.
+### `npm test`
 
-- To install babel, first run the below 2 commands in your terminal in the root folder structure :-
-  > npm install --save-dev @babel/core @babel/cli @babel/preset-env
-  > npm install -save @babel/polyfill
-- Now, in the root folder of our project add create a new file by name "babel.config.json" and add the below presets into it.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-{
-"presets": [
-[
-"@babel/env",
-{
-"targets": {
-"edge": "17",
-"firefox": "60",
-"chrome": "67",
-"safari": "11.1"
-},
-"useBuiltIns": "usage",
-"corejs": "3.6.5"
-}
-],
-"@babel/preset-react"
-]
-}
+### `npm run build`
 
-=> @babel/env tells the browser which versions it should target, and @babel/preset-react allows Babel to compile JSX.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- Now, go back to your package.json, and under scripts, replace the build script with the following one -
-  > "build": "del /S /Q dist && set NODE_ENV=production && babel src/lib --out-dir dist --copy-files",
-  > => This will copy the src/lib to a new folder called dist. This folder is invisible but will be added to your root folder after build.
-- Now run> npm i
-- Now, run the below command in your terminal to build the dist folder :-
-  > npm run build
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Step 4- Changing the package.json for publishing our component and it should look like below :-
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-"name": "namit-button", // the unique name that you want to keep for your package.
-"version": "0.0.1", // it will show the version of your package.
-"private": false, // make it false from true otherwise your package won't be published.
-"description": "Testing React Component", // you can give the description about your package.
-"author": "Namit Kumar Singh", // you can give your name here.
-"keywords": ["react", "components", "ui"],
-"main": "dist/index.js",
-"module": "dist/index.js",
-"files": [ "dist", "README.md" ],
-"repository": {                                
-"type": "git",
-"url": "git+https://github.com/namit-button/npm-test.git"   
-},
+### `npm run eject`
 
-- description, author, keywords and repository are all optional fields that will give potential end users a better idea of the package.
-- Again run> npm i
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-Step 5- Publish the component
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-- Run the below commands in your terminal to publish it.
-  > npm login : username:suvu0707/password:lai@123456
-  > npm publish
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-Step 6- Your're good to go with the new package to use.
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-Step 7- To update Newer version 1st change verson no in package.json then run this command.
-     npm publish --access public
+## Learn More
 
-     for import use=> npm i libraryname@versionNo
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-**If u are maintaining your repo in git then commit all changes before npm publish **
+### Code Splitting
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
+### Analyzing the Bundle Size
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-## How to Work with NPM Packages locally Using .tgz Files
+### Making a Progressive Web App
 
-Step 1- Run the below command in your terminal after Step 4 of the above topic :-
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-> npm pack
+### Advanced Configuration
 
-- This will generate a .tgz file at the directory’s root with a structure like this: {name}-{version}.tgz
-- In the directory of the project that you want to test your NPM package, just run an npm install with the path to your .tgz file.
-  => Something like: npm install ../../my-package/my-package-1.1.0.tgz.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
+### Deployment
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-Component used in Git repo redux-toolkit-with-create-reducer
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
