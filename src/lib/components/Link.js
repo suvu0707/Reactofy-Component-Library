@@ -1,10 +1,11 @@
 import React from 'react';
-import CustomLink from '@mui/material/Link';
+import Link from '@mui/material/Link';
 
-function MyCustomLink(props) {
+
+function ReactofyLink(props) {
   return (
-    <CustomLink href={props.href}>{props.text}</CustomLink>
-  );
+    <Link href={props.href}>{props.text}</Link>
+  )
 }
 
-export default MyCustomLink;
+export default ReactofyLink;

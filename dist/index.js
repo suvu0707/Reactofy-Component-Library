@@ -9,7 +9,7 @@ Object.defineProperty(exports, "Button", {
     return _Button.default;
   }
 });
-Object.defineProperty(exports, "MyCustomLink", {
+Object.defineProperty(exports, "ReactofyLink", {
   enumerable: true,
   get: function get() {
     return _Link.default;
