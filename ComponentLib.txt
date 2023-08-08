@@ -92,7 +92,8 @@ Step 7- To update Newer version 1st change verson no in package.json then run th
      git add .
      git commit -m "ddb"
      git push
-     git pu
+     npm login    //if already not loggedin
+     npm publish --access public
 **Dont change Readme Contents **
 
 
