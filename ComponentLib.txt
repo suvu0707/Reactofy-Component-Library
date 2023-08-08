@@ -88,7 +88,12 @@ Step 7- To update Newer version 1st change verson no in package.json then run th
 
 
 **If u are maintaining your repo in git then commit all changes before npm publish **
-
+     npm run build
+     git add .
+     git commit -m "ddb"
+     git push
+     git pu
+**Dont change Readme Contents **
 
 
 
@@ -104,4 +109,4 @@ Step 1- Run the below command in your terminal after Step 4 of the above topic :
 
 
 
-Component used in Git repo redux-toolkit-with-create-reducer
+   Component used in Git repo redux-toolkit-with-create-reducer
