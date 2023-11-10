@@ -3,6 +3,8 @@ import VirtualizedList from "./VirtualizedList";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 function Combobox({
   options,
+  valueKey,
+  labelKey,
   multiSelect,
   search,
   containerHeight,
@@ -19,8 +21,12 @@ function Combobox({
   const containerRef = useRef(null);
   const isMounted = useRef(true);
 
+  const modifiedOptions=options?.map((obj)=>{
+    return {value:obj[valueKey],label:obj[labelKey]}
+  })
+
   useEffect(() => {
-    setLoadedOptions(options ? options : []);
+    setLoadedOptions(modifiedOptions ? modifiedOptions : []);
 
     isMounted.current = true;
 
@@ -80,7 +86,7 @@ console.log("ww",4)
   }, []);
 
   const filteredOptions = loadedOptions.filter((option) =>
-    option.label.toLowerCase().startsWith(searchInput.toLowerCase())
+    option.label?.toLowerCase().startsWith(searchInput?.toLowerCase())
   );
   const optionsForMultiSelect =
     selectedOptions.length > 0
