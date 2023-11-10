@@ -9,5 +9,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function ReactofyGrid() {
   return /*#__PURE__*/_react.default.createElement("div", null, "ReactofyGrid");
 }
-var _default = ReactofyGrid;
-exports.default = _default;
+var _default = exports.default = ReactofyGrid;

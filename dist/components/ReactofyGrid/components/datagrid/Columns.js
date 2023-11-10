@@ -11,13 +11,11 @@ var _core = require("@linaria/core");
 var _formatters = require("./formatters");
 var _useRowSelection = require("./hooks/useRowSelection");
 var _templateObject;
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-const SERIAL_NUMBER_COLUMN_KEY = "serial-number";
-exports.SERIAL_NUMBER_COLUMN_KEY = SERIAL_NUMBER_COLUMN_KEY;
-const SELECT_COLUMN_KEY = "select-row";
-exports.SELECT_COLUMN_KEY = SELECT_COLUMN_KEY;
+const SERIAL_NUMBER_COLUMN_KEY = exports.SERIAL_NUMBER_COLUMN_KEY = "serial-number";
+const SELECT_COLUMN_KEY = exports.SELECT_COLUMN_KEY = "select-row";
 const headerCellClassName = (0, _core.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: #16365d;\n  color: white;\n  font-weight: bold;\n"])));
 function SelectFormatter(props) {
   const [isRowSelected, onRowSelectionChange] = (0, _useRowSelection.useRowSelection)();
@@ -57,7 +55,7 @@ function SelectGroupFormatter(props) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SelectColumn = {
+const SelectColumn = exports.SelectColumn = {
   key: SELECT_COLUMN_KEY,
   name: "",
   width: 35,
@@ -83,8 +81,7 @@ const SelectColumn = {
     return /*#__PURE__*/_react.default.createElement(SelectGroupFormatter, props);
   }
 };
-exports.SelectColumn = SelectColumn;
-const SerialNumberColumn = {
+const SerialNumberColumn = exports.SerialNumberColumn = {
   key: SERIAL_NUMBER_COLUMN_KEY,
   name: "Sr. No.",
   field: "Sr. No.",
@@ -102,4 +99,3 @@ const SerialNumberColumn = {
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, props.column.rowIndex + 1, " ");
   }
 };
-exports.SerialNumberColumn = SerialNumberColumn;

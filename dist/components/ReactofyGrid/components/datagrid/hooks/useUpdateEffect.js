@@ -15,5 +15,4 @@ function useUpdateEffect(fn, deps) {
     return fn();
   }, deps);
 }
-var _default = useUpdateEffect;
-exports.default = _default;
+var _default = exports.default = useUpdateEffect;

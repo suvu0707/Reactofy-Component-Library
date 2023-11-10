@@ -15,11 +15,13 @@ var _react = _interopRequireWildcard(require("react"));
 var _VirtualizedList = _interopRequireDefault(require("./VirtualizedList"));
 var _ArrowDropDown = _interopRequireDefault(require("@mui/icons-material/ArrowDropDown"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function Combobox(_ref) {
   let {
     options,
+    valueKey,
+    labelKey,
     multiSelect,
     search,
     containerHeight,
@@ -35,8 +37,14 @@ function Combobox(_ref) {
   const [searchInput, setSearchInput] = (0, _react.useState)(""); // State
   const containerRef = (0, _react.useRef)(null);
   const isMounted = (0, _react.useRef)(true);
+  const modifiedOptions = options === null || options === void 0 ? void 0 : options.map(obj => {
+    return {
+      value: obj[valueKey],
+      label: obj[labelKey]
+    };
+  });
   (0, _react.useEffect)(() => {
-    setLoadedOptions(options ? options : []);
+    setLoadedOptions(modifiedOptions ? modifiedOptions : []);
     isMounted.current = true;
     return () => {
       isMounted.current = false;
@@ -80,7 +88,10 @@ function Combobox(_ref) {
       window.removeEventListener("beforeunload", cleanup);
     };
   }, []);
-  const filteredOptions = loadedOptions.filter(option => option.label.toLowerCase().startsWith(searchInput.toLowerCase()));
+  const filteredOptions = loadedOptions.filter(option => {
+    var _option$label;
+    return (_option$label = option.label) === null || _option$label === void 0 ? void 0 : _option$label.toLowerCase().startsWith(searchInput === null || searchInput === void 0 ? void 0 : searchInput.toLowerCase());
+  });
   const optionsForMultiSelect = selectedOptions.length > 0 ? selectedOptions.map(item => item.label).join(", ") : "Select an item";
   console.log("optionsForMultiSelect", optionsForMultiSelect);
   const optionsForSingleSelect = selectedOption ? selectedOption.label : "Select an item";
@@ -155,5 +166,4 @@ function Combobox(_ref) {
     handleOptionClick: handleOptionClick
   })));
 }
-var _default = Combobox;
-exports.default = _default;
+var _default = exports.default = Combobox;

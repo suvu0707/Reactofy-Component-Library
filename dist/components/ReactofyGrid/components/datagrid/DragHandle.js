@@ -83,7 +83,7 @@ function DragHandle(_ref) {
       }
     }
     if (indexes.length > 0) {
-      onRowsChange === null || onRowsChange === void 0 ? void 0 : onRowsChange(updatedRows, {
+      onRowsChange === null || onRowsChange === void 0 || onRowsChange(updatedRows, {
         indexes,
         column
       });

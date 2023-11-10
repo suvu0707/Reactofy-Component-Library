@@ -52,11 +52,11 @@ var _useCalculatedColumnsWithTopHeader = require("./hooks/useCalculatedColumnsWi
 var _templateObject;
 const _excluded = ["columnData", "rowData", "topSummaryRows", "bottomSummaryRows", "onRowsChange", "rowHeight", "headerRowHeight", "summaryRowHeight", "selectedRows", "onSelectedRowsChange", "defaultColumnOptions", "groupBy", "expandedGroupIds", "onExpandedGroupIdsChange", "onRowClicked", "onRowDoubleClicked", "selectedCellHeaderStyle", "onScroll", "onColumnResize", "onFill", "serialNumber", "rowSelection", "onCopy", "onPaste", "selectedCellRowStyle", "onCellClicked", "onCellDoubleClicked", "onCellContextMenu", "cellNavigationMode", "enableVirtualization", "renderers", "className", "showSelectedRows", "style", "rowClass", "direction", "getContextMenuItems", "aria-label", "aria-labelledby", "aria-describedby", "testId", "columnReordering", "pagination", "paginationPageSize", "suppressPaginationPanel", "paginationAutoPageSize", "defaultPage", "frameworkComponents", "onGridReady", "valueChangedCellStyle", "rowFreezLastIndex"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
@@ -279,8 +279,8 @@ function DataGrid(props, ref) {
   const response = rawColumns;
   flattedColumns = response.flatMap(flat());
   const defaultFilters = {};
-  (_flattedColumns = flattedColumns) === null || _flattedColumns === void 0 ? void 0 : _flattedColumns.map(i => defaultFilters[i.field] = "");
-  rawColumns === null || rawColumns === void 0 ? void 0 : rawColumns.map(i => defaultFilters[i.key] = "");
+  (_flattedColumns = flattedColumns) === null || _flattedColumns === void 0 || _flattedColumns.map(i => defaultFilters[i.field] = "");
+  rawColumns === null || rawColumns === void 0 || rawColumns.map(i => defaultFilters[i.key] = "");
   const subColumn = [];
   const [filters, setFilters] = (0, _react.useState)(_objectSpread(_objectSpread({}, defaultFilters), {}, {
     enabled: true
@@ -701,14 +701,14 @@ function DataGrid(props, ref) {
   function removeRowGroupColumn(colKey) {
     const key = typeof colKey === "string" ? colKey : colKey.colId;
     const indexOfKey = rawGroupBy === null || rawGroupBy === void 0 ? void 0 : rawGroupBy.findIndex(c => c === key);
-    if (indexOfKey > -1) rawGroupBy === null || rawGroupBy === void 0 ? void 0 : rawGroupBy.splice(indexOfKey, 1);
+    if (indexOfKey > -1) rawGroupBy === null || rawGroupBy === void 0 || rawGroupBy.splice(indexOfKey, 1);
     setRawColumns(raawColumns);
   }
   function removeRowGroupColumns(colKeys) {
     colKeys.forEach(colKey => {
       const key = typeof colKey === "string" ? colKey : colKey.colId;
       const indexOfKey = rawGroupBy === null || rawGroupBy === void 0 ? void 0 : rawGroupBy.findIndex(c => c === key);
-      if (indexOfKey > -1) rawGroupBy === null || rawGroupBy === void 0 ? void 0 : rawGroupBy.splice(indexOfKey, 1);
+      if (indexOfKey > -1) rawGroupBy === null || rawGroupBy === void 0 || rawGroupBy.splice(indexOfKey, 1);
     });
     setRawColumns(raawColumns);
   }
@@ -1245,7 +1245,7 @@ function DataGrid(props, ref) {
     const newColumnWidths = new Map(columnWidths);
     newColumnWidths.set(column.key, measuredWidth);
     setColumnWidths(newColumnWidths);
-    onColumnResize === null || onColumnResize === void 0 ? void 0 : onColumnResize(column.idx, measuredWidth);
+    onColumnResize === null || onColumnResize === void 0 || onColumnResize(column.idx, measuredWidth);
   }
   function selectAllRows(checked) {
     if (!onSelectedRowsChange1) return;
@@ -1372,7 +1372,7 @@ function DataGrid(props, ref) {
       // scrollLeft is nagative when direction is rtl
       setScrollLeft((0, _utils.abs)(scrollLeft));
     });
-    onScroll === null || onScroll === void 0 ? void 0 : onScroll(event);
+    onScroll === null || onScroll === void 0 || onScroll(event);
   }
   function getRawRowIdx(rowIdx) {
     return hasGroups ? rawRows.indexOf(rows[rowIdx]) : rowIdx;
@@ -1429,7 +1429,7 @@ function DataGrid(props, ref) {
       row: sourceRow,
       columnKey: sourceColumnKey
     });
-    onCopy === null || onCopy === void 0 ? void 0 : onCopy({
+    onCopy === null || onCopy === void 0 || onCopy({
       sourceRow,
       sourceColumnKey
     });
@@ -1476,7 +1476,7 @@ function DataGrid(props, ref) {
       return;
     }
     const column = columns4[selectedPosition.idx];
-    (_column$editorOptions = column.editorOptions) === null || _column$editorOptions === void 0 || (_column$editorOptions2 = _column$editorOptions.onCellKeyDown) === null || _column$editorOptions2 === void 0 ? void 0 : _column$editorOptions2.call(_column$editorOptions, event);
+    (_column$editorOptions = column.editorOptions) === null || _column$editorOptions === void 0 || (_column$editorOptions2 = _column$editorOptions.onCellKeyDown) === null || _column$editorOptions2 === void 0 || _column$editorOptions2.call(_column$editorOptions, event);
     if (event.isDefaultPrevented()) return;
     if (isCellEditable(selectedPosition) && (0, _utils.isDefaultCellInput)(event)) {
       setSelectedPosition(_ref7 => {
@@ -1974,7 +1974,7 @@ function DataGrid(props, ref) {
       isUpdated++;
     }
     //Remove Rows
-    (_transactionObject$re = transactionObject.remove) === null || _transactionObject$re === void 0 ? void 0 : _transactionObject$re.sort((a, b) => a.id < b.id ? 1 : -1);
+    (_transactionObject$re = transactionObject.remove) === null || _transactionObject$re === void 0 || _transactionObject$re.sort((a, b) => a.id < b.id ? 1 : -1);
     for (let i = 0; i < ((_transactionObject$re2 = transactionObject.remove) === null || _transactionObject$re2 === void 0 ? void 0 : _transactionObject$re2.length); i++) {
       var _transactionObject$re2;
       let rowIndex;
@@ -2083,7 +2083,7 @@ function DataGrid(props, ref) {
   function getSelectedNodes() {
     let selectedNodes = [];
     const selectedRowsSet = Array.from(selectedRows1);
-    RowNodes === null || RowNodes === void 0 ? void 0 : RowNodes.forEach(rowNode => {
+    RowNodes === null || RowNodes === void 0 || RowNodes.forEach(rowNode => {
       const rowKey = rowKeyGetter === null || rowKeyGetter === void 0 ? void 0 : rowKeyGetter(rowNode.data);
       if (selectedRowsSet.includes(rowKey)) selectedNodes.push(rowNode);
     });
@@ -2412,7 +2412,7 @@ function DataGrid(props, ref) {
     if (rowNode.rowIndex) {
       index = rowNode.rowIndex;
     } else {
-      rows === null || rows === void 0 ? void 0 : rows.map((obj, idx) => {
+      rows === null || rows === void 0 || rows.map((obj, idx) => {
         if (JSON.stringify(rowNode) === JSON.stringify(obj)) {
           index = idx;
         }
@@ -2816,12 +2816,12 @@ function DataGrid(props, ref) {
   const jumpnext = document.getElementsByClassName("rc-pagination-jump-next");
   if (jumpnext) {
     var _jumpnext$;
-    (_jumpnext$ = jumpnext[0]) === null || _jumpnext$ === void 0 ? void 0 : _jumpnext$.setAttribute("title", "");
+    (_jumpnext$ = jumpnext[0]) === null || _jumpnext$ === void 0 || _jumpnext$.setAttribute("title", "");
   }
   const jumpprev = document.getElementsByClassName("rc-pagination-jump-prev");
   if (jumpprev) {
     var _jumpprev$;
-    (_jumpprev$ = jumpprev[0]) === null || _jumpprev$ === void 0 ? void 0 : _jumpprev$.setAttribute("title", "");
+    (_jumpprev$ = jumpprev[0]) === null || _jumpprev$ === void 0 || _jumpprev$.setAttribute("title", "");
   }
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, props.export && /*#__PURE__*/_react.default.createElement("div", {
     className: toolbarClassname
@@ -3034,5 +3034,4 @@ function DataGrid(props, ref) {
 function isSamePosition(p1, p2) {
   return p1.idx === p2.idx && p1.rowIdx === p2.rowIdx;
 }
-var _default = /*#__PURE__*/(0, _react.forwardRef)(DataGrid);
-exports.default = _default;
+var _default = exports.default = /*#__PURE__*/(0, _react.forwardRef)(DataGrid);

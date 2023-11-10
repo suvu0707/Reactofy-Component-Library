@@ -12,5 +12,4 @@ function ReactofyLink(props) {
     href: props.href
   }, props.text);
 }
-var _default = ReactofyLink;
-exports.default = _default;
+var _default = exports.default = ReactofyLink;

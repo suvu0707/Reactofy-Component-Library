@@ -13,5 +13,4 @@ function Button(props) {
     }
   }, props.text);
 }
-var _default = Button;
-exports.default = _default;
+var _default = exports.default = Button;
