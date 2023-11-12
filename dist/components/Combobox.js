@@ -161,7 +161,7 @@ function Combobox(_ref) {
     items: filteredOptions,
     selectedOptions: selectedOptions,
     optionHeight: optHeight,
-    containerWidth: 145,
+    containerWidth: containerWidth ? containerWidth : 145,
     containerHeight: totalOptionsHeight,
     handleOptionClick: handleOptionClick
   })));
