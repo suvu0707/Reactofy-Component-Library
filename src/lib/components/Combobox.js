@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import VirtualizedList from "./VirtualizedList";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ReactDOM from "react-dom";
+import ToolTip from "./ToolTip";
 function Combobox({
   options,
   valueKey,
@@ -95,7 +96,7 @@ function Combobox({
     selectedOptions.length > 0
       ? selectedOptions.map((item) => item.label).join(", ")
       : "Select an item";
-  console.log("optionsForMultiSelect", isOpen , selectedOptions.length );
+  console.log("optionsForMultiSelect" , selectedOptions.length );
   const optionsForSingleSelect = selectedOption
     ? selectedOption.label
     : "Select an item";
@@ -132,6 +133,10 @@ function Combobox({
   
   // Calculate the left position of the tooltip based on the buttonRect and viewport width
 
+  const stopPropagation=(event)=>{
+    event.stopPropagation();
+  }
+
   return (
     <div
       ref={containerRef}
@@ -146,7 +151,7 @@ function Combobox({
         onClick={toggleDropdown}
         style={{
           width: `${containerWidth ? containerWidth : 145}px`,
-          border: `1px solid ${isToolTipOpen ? "red" : "blue"}`,
+          border: `1px solid ${isOpen === false && selectedOptions.length === 0 ? "red" : "blue"}`,
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -189,7 +194,7 @@ function Combobox({
         <div onClick={onHandleClick} style={{ cursor: "pointer" }}>
           <ArrowDropDownIcon
             style={{
-              transform: isOpen === false ? "rotate(0deg)" : "rotate(180deg)",
+              transform: isOpen === false || isOpen === undefined ? "rotate(0deg)" : "rotate(180deg)",
               fill: "white",
               background: "blue",
               stroke: "blue",
@@ -200,22 +205,11 @@ function Combobox({
             }}
           />
         </div>
-      </div>
-      {isToolTipOpen && (
-        <div
-          style={{
-            position: "absolute",
-            zIndex: 9999,
-            width: "200px",
-            padding: "10px 10px",
-            background: "white",
-            borderRadius: "6px",
-            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)",
-          }}
-        >
-          Please Select Combobox Value
-        </div>
+        {isToolTipOpen && (
+        <ToolTip stopPropagation={stopPropagation}/>
       )}
+      </div>
+     
       {isOpen && (
         <div style={{ position: "absolute", zIndex: 9999 }}>
           <VirtualizedList
