@@ -15,6 +15,7 @@ var _react = _interopRequireWildcard(require("react"));
 var _VirtualizedList = _interopRequireDefault(require("./VirtualizedList"));
 var _ArrowDropDown = _interopRequireDefault(require("@mui/icons-material/ArrowDropDown"));
 var _reactDom = _interopRequireDefault(require("react-dom"));
+var _ToolTip = _interopRequireDefault(require("./ToolTip"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -96,7 +97,7 @@ function Combobox(_ref) {
     return (_option$label = option.label) === null || _option$label === void 0 ? void 0 : _option$label.toLowerCase().startsWith(searchInput === null || searchInput === void 0 ? void 0 : searchInput.toLowerCase());
   });
   const optionsForMultiSelect = selectedOptions.length > 0 ? selectedOptions.map(item => item.label).join(", ") : "Select an item";
-  console.log("optionsForMultiSelect", isOpen, selectedOptions.length);
+  console.log("optionsForMultiSelect", selectedOptions.length);
   const optionsForSingleSelect = selectedOption ? selectedOption.label : "Select an item";
   const contHeight = containerHeight ? containerHeight : 200;
   const optHeight = optionHeight ? optionHeight : 24;
@@ -123,6 +124,9 @@ function Combobox(_ref) {
 
   // Calculate the left position of the tooltip based on the buttonRect and viewport width
 
+  const stopPropagation = event => {
+    event.stopPropagation();
+  };
   return /*#__PURE__*/_react.default.createElement("div", {
     ref: containerRef,
     className: "large-combobox ".concat(isOpen ? "open" : ""),
@@ -138,7 +142,7 @@ function Combobox(_ref) {
     onClick: toggleDropdown,
     style: {
       width: "".concat(containerWidth ? containerWidth : 145, "px"),
-      border: "1px solid ".concat(isToolTipOpen ? "red" : "blue"),
+      border: "1px solid ".concat(isOpen === false && selectedOptions.length === 0 ? "red" : "blue"),
       position: "relative",
       display: "flex",
       alignItems: "center",
@@ -171,7 +175,7 @@ function Combobox(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement(_ArrowDropDown.default, {
     style: {
-      transform: isOpen === false ? "rotate(0deg)" : "rotate(180deg)",
+      transform: isOpen === false || isOpen === undefined ? "rotate(0deg)" : "rotate(180deg)",
       fill: "white",
       background: "blue",
       stroke: "blue",
@@ -180,17 +184,9 @@ function Combobox(_ref) {
       right: 0,
       bottom: 0
     }
-  }))), isToolTipOpen && /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      position: "absolute",
-      zIndex: 9999,
-      width: "200px",
-      padding: "10px 10px",
-      background: "white",
-      borderRadius: "6px",
-      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.3)"
-    }
-  }, "Please Select Combobox Value"), isOpen && /*#__PURE__*/_react.default.createElement("div", {
+  })), isToolTipOpen && /*#__PURE__*/_react.default.createElement(_ToolTip.default, {
+    stopPropagation: stopPropagation
+  })), isOpen && /*#__PURE__*/_react.default.createElement("div", {
     style: {
       position: "absolute",
       zIndex: 9999
