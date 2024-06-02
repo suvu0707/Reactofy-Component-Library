@@ -9,12 +9,114 @@ body{
 
 ::-webkit-scrollbar-track {
   background-color: #ebebeb;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  /* -webkit-border-radius: 10px; */
+  /* border-radius: 10px; */
 }
 
 ::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  /* -webkit-border-radius: 10px; */
+  /* border-radius: 10px; */
   background: #6d6d6d; 
+}
+
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* App styles */
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+/* Combobox styles */
+.large-combobox {
+  position: relative;
+  /* width: max-content; */
+}
+
+.combobox-header {
+  padding: 5px; 
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  /* transition: border-color 0.3s; */
+}
+
+.combobox-header:hover {
+  border-color: #888;
+}
+
+/* .combobox-header input {
+  width: calc(100% - 64px);
+  border: none;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+} */
+
+/* .combobox-header div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+} */
+
+.combobox-header svg {
+  fill: white;
+  background-color: blue;
+  /* border-radius: "0 4px 4px 0"; */
+}
+
+/* .combobox-dropdown {
+  position: absolute;
+  z-index: 9999;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+} */
+
+/* VirtualizedList styles */
+.virtualized-list {
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Shadow effect */
+
+  /* padding: 6px; */
+}
+
+.virtualized-list-item {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.virtualized-list-item:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.virtualized-list-item:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.virtualized-list-item:hover {
+  background-color: #e0e0e0;
+}
+
+.virtualized-list-item input {
+  margin-right: 8px;
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import VirtualizedList from "./VirtualizedList";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ReactDOM from "react-dom";
 import ToolTip from "./ToolTip";
+
 function Combobox({
   options,
   valueKey,
@@ -15,39 +15,41 @@ function Combobox({
   getSelectedOptions,
   iconWidth,
 }) {
-  const [isOpen, setIsOpen] = useState();
+  const [isOpen, setIsOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
   const [loadedOptions, setLoadedOptions] = useState([]);
-  const [searchInput, setSearchInput] = useState(""); // State
+  const [searchInput, setSearchInput] = useState("");
   const containerRef = useRef(null);
   const isMounted = useRef(true);
 
-  const modifiedOptions = options?.map((obj) => {
-    return { value: obj[valueKey], label: obj[labelKey] };
-  });
+  const modifiedOptions = options?.map((obj) => ({
+    value: obj[valueKey],
+    label: obj[labelKey],
+  }));
 
   useEffect(() => {
     setLoadedOptions(modifiedOptions ? modifiedOptions : []);
-
     isMounted.current = true;
-
     return () => {
       isMounted.current = false;
+    };
+  }, [options]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  getSelectedOptions &&
-    getSelectedOptions(
-      selectedOptions.length > 0 ? selectedOptions : selectedOption
-    );
+
   const handleOptionClick = (option) => {
-    setSearchInput("");
     setIsToolTipOpen(false);
     if (multiSelect) {
       if (selectedOptions.includes(option)) {
@@ -57,7 +59,6 @@ function Combobox({
       }
     } else {
       setSelectedOptions([option]);
-      // setSelectedOption( option);
       setIsOpen(false);
     }
   };
@@ -72,70 +73,39 @@ function Combobox({
       setIsOpen(false);
     }
   };
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    const cleanup = () => {
-      if (isMounted.current) {
-        document.removeEventListener("mousedown", handleClickOutside);
-      }
-    };
-
-    window.addEventListener("beforeunload", cleanup);
-
-    return () => {
-      cleanup();
-      window.removeEventListener("beforeunload", cleanup);
-    };
-  }, []);
 
   const filteredOptions = loadedOptions.filter((option) =>
     option.label?.toLowerCase().startsWith(searchInput?.toLowerCase())
   );
+
   const optionsForMultiSelect =
     selectedOptions.length > 0
       ? selectedOptions.map((item) => item.label).join(", ")
       : "Select an item";
-  console.log("optionsForMultiSelect" , selectedOptions.length );
   const optionsForSingleSelect = selectedOption
     ? selectedOption.label
     : "Select an item";
 
-  const contHeight = containerHeight ? containerHeight : 200;
-  const optHeight = optionHeight ? optionHeight : 24;
-  let totalOptionsHeight;
-  if (
-    filteredOptions.length * optHeight < contHeight &&
-    filteredOptions.length > 0
-  ) {
-    totalOptionsHeight = filteredOptions.length * optHeight;
-  } else if (filteredOptions.length === 0) {
-    totalOptionsHeight = optHeight;
-  } else {
-    totalOptionsHeight = contHeight;
-  }
-  console.log("filteredOptions", contHeight, optHeight, totalOptionsHeight);
+  const contHeight = containerHeight || 200;
+  const optHeight = optionHeight || 24;
+  const totalOptionsHeight = Math.min(
+    filteredOptions.length * optHeight,
+    contHeight
+  );
 
-  const onHandleClick = () => {
-    setIsOpen(!isOpen);
-  };
-  const toggleIconWidth = iconWidth ? iconWidth : 24;
-
+  const toggleIconWidth = iconWidth || 24;
 
   const handleToolTipOpen = () => {
-    if (isOpen === false && selectedOptions.length === 0) {
+    if (!isOpen && selectedOptions.length === 0) {
       setIsToolTipOpen(true);
-    }  
-    else{
+    } else {
       setIsToolTipOpen(false);
     }
   };
-  
-  // Calculate the left position of the tooltip based on the buttonRect and viewport width
 
-  const stopPropagation=(event)=>{
+  const stopPropagation = (event) => {
     event.stopPropagation();
-  }
+  };
 
   return (
     <div
@@ -151,7 +121,9 @@ function Combobox({
         onClick={toggleDropdown}
         style={{
           width: `${containerWidth ? containerWidth : 145}px`,
-          border: `1px solid ${isOpen === false && selectedOptions.length === 0 ? "red" : "blue"}`,
+          border: `1.5px solid ${
+            !isOpen && selectedOptions.length === 0 ? "red" : "blue"
+          }`,
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -160,67 +132,52 @@ function Combobox({
           boxSizing: "border-box",
         }}
       >
-        {search && (
-          <input
-            style={{
-              width: `${containerWidth - 24}px`,
-              position: "absolute",
-              boxSizing: "border-box",
-              top: "0px",
-              zIndex: isOpen ? 1 : -1,
-            }}
-            placeholder="Search Your Item"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        )}
-        {/* {multiSelect ? optionsForMultiSelect : optionsForSingleSelect} */}
-        {/* {multiSelect && <input
-                type="checkbox"
-                checked={checked}
-                onChange={e=>setChecked(!checked)}
-              />
-             } */}
         <div
           style={{
             overflow: "hidden",
             whiteSpace: "nowrap",
             textOverflow: "ellipsis",
-            width: `${containerWidth - toggleIconWidth}px`,
+            width: `${containerWidth - toggleIconWidth - 10}px`,
           }}
         >
-          {optionsForMultiSelect}
+          {multiSelect ? optionsForMultiSelect : optionsForSingleSelect}
         </div>
-        <div onClick={onHandleClick} style={{ cursor: "pointer" }}>
+        <div onClick={toggleDropdown} style={{ cursor: "pointer" }}>
           <ArrowDropDownIcon
             style={{
-              transform: isOpen === false || isOpen === undefined ? "rotate(0deg)" : "rotate(180deg)",
+              transform: !isOpen ? "rotate(0deg)" : "rotate(180deg)",
               fill: "white",
               background: "blue",
               stroke: "blue",
               height: "100%",
               position: "absolute",
+              width: toggleIconWidth,
               right: 0,
               bottom: 0,
+              borderRadius: "0 3px 3px 0 !important",
             }}
           />
         </div>
-        {isToolTipOpen && (
-        <ToolTip stopPropagation={stopPropagation}/>
-      )}
+        {isToolTipOpen && <ToolTip stopPropagation={stopPropagation} />}
       </div>
-     
+
       {isOpen && (
-        <div style={{ position: "absolute", zIndex: 9999 }}>
+        <div
+          className="combobox-dropdown"
+          style={{ position: "absolute", zIndex: 9999 }}
+        >
           <VirtualizedList
             multiSelect={multiSelect}
             checked={checked}
             items={filteredOptions}
             selectedOptions={selectedOptions}
             optionHeight={optHeight}
-            containerWidth={containerWidth ? containerWidth : 145}
+            containerWidth={containerWidth || 145}
             containerHeight={totalOptionsHeight}
             handleOptionClick={handleOptionClick}
+            search={search}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
           />
         </div>
       )}

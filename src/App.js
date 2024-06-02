@@ -9,7 +9,9 @@ function App() {
     <div className="App">
       
         {/* <p className='container title'> */}
-        <Combobox  valueKey={"value"} labelKey={"label"} containerWidth={200}  options={comboAOptions} getSelectedOptions={onSelectedItem} />
+        {/* <Combobox multiSelect  valueKey={"value"} labelKey={"label"} containerWidth={200}  options={comboAOptions} getSelectedOptions={onSelectedItem} /> */}
+        <br/>
+        <Combobox valueKey={"value"} labelKey={"label"} iconWidth={30} search containerWidth={220} containerHeight={200}  options={comboAOptions} getSelectedOptions={onSelectedItem} />
   
         
     </div>

@@ -8,9 +8,10 @@ function VirtualizedList({
   containerWidth,
   containerHeight,
   handleOptionClick,
-  checked
+  search,
+  searchInput,
+  setSearchInput,
 }) {
-  
   const [scrollTop, setScrollTop] = useState(0);
   const startIndex = Math.floor(scrollTop / optionHeight);
   const endIndex = Math.min(
@@ -33,49 +34,69 @@ function VirtualizedList({
   }, [scrollTop]);
 
   return (
-    <div
-      ref={containerRef}
-      style={{
-        height: `${containerHeight}px`,
-        width: `${containerWidth}px`,
-        overflowY: "auto",
-        background: "white",
-      }}
-      onScroll={handleScroll}
-    >
-      <div style={{ height: `${items.length * optionHeight}px` }}>
+    <div className="virtualized-list">
+      {search &&
         <div
           style={{
-            position: "relative",
-            height: `${visibleItems.length * optionHeight}px`,
-            top: `${startIndex * optionHeight}px`,
+            width: "100%",
+            height: "40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderBottom: "1px solid #000",
           }}
         >
-          {visibleItems.map((item) => (
-            <div
-              key={item.value}
-              style={{
-                height: `${optionHeight}px`,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",  
-              }}
-              onClick={() => handleOptionClick(item)} 
-            >
-             {multiSelect && <input
-                type="checkbox"
-                checked={selectedOptions.includes(item)}
-              />
-             }
-              {item.label}
-            </div>
-          ))}
+          <input
+            placeholder="Search Your Item"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
         </div>
-        <div style={{ height: `${invisibleItemsHeight}px` }} />
+      }
+      <div
+        ref={containerRef}
+        style={{
+          height: `${containerHeight}px`,
+          width: `${containerWidth}px`,
+          overflowY: "auto",
+          background: "white",
+          boxSizing: "border-box",
+        }}
+        onScroll={handleScroll}
+      >
+        <div style={{ height: `${items.length * optionHeight}px` }}>
+          <div
+            style={{
+              position: "relative",
+              height: `${visibleItems.length * optionHeight}px`,
+              top: `${startIndex * optionHeight}px`,
+            }}
+          >
+            {visibleItems.map((item) => (
+              <div
+                key={item.value}
+                className="virtualized-list-item"
+                style={{
+                  height: `${optionHeight}px`,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  borderBottom: "1px solid #ccc"
+                }}
+                onClick={() => handleOptionClick(item)}
+              >
+                {multiSelect && (
+                  <input type="checkbox" checked={selectedOptions.includes(item)} />
+                )}
+                {item.label}
+              </div>
+            ))}
+          </div>
+          <div style={{ height: `${invisibleItemsHeight}px` }} />
+        </div>
       </div>
     </div>
   );
 }
-
 
 export default VirtualizedList;
