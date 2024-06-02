@@ -15,8 +15,9 @@ function ToolTip(_ref) {
     style: {
       position: "absolute",
       zIndex: 9999,
-      top: "20px",
+      top: "38px",
       fontSize: "14px",
+      left: 0,
       width: "max-content",
       padding: "5px 10px",
       background: "white",

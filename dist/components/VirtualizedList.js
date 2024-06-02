@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.search.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 require("core-js/modules/es.array.includes.js");
 require("core-js/modules/es.string.includes.js");
@@ -20,7 +22,9 @@ function VirtualizedList(_ref) {
     containerWidth,
     containerHeight,
     handleOptionClick,
-    checked
+    search,
+    searchInput,
+    setSearchInput
   } = _ref;
   const [scrollTop, setScrollTop] = (0, _react.useState)(0);
   const startIndex = Math.floor(scrollTop / optionHeight);
@@ -37,12 +41,28 @@ function VirtualizedList(_ref) {
     }
   }, [scrollTop]);
   return /*#__PURE__*/_react.default.createElement("div", {
+    className: "virtualized-list"
+  }, search && /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      width: "100%",
+      height: "40px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderBottom: "1px solid #000"
+    }
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    placeholder: "Search Your Item",
+    value: searchInput,
+    onChange: e => setSearchInput(e.target.value)
+  })), /*#__PURE__*/_react.default.createElement("div", {
     ref: containerRef,
     style: {
       height: "".concat(containerHeight, "px"),
       width: "".concat(containerWidth, "px"),
       overflowY: "auto",
-      background: "white"
+      background: "white",
+      boxSizing: "border-box"
     },
     onScroll: handleScroll
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -57,11 +77,13 @@ function VirtualizedList(_ref) {
     }
   }, visibleItems.map(item => /*#__PURE__*/_react.default.createElement("div", {
     key: item.value,
+    className: "virtualized-list-item",
     style: {
       height: "".concat(optionHeight, "px"),
       cursor: "pointer",
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
+      borderBottom: "1px solid #ccc"
     },
     onClick: () => handleOptionClick(item)
   }, multiSelect && /*#__PURE__*/_react.default.createElement("input", {
@@ -71,6 +93,6 @@ function VirtualizedList(_ref) {
     style: {
       height: "".concat(invisibleItemsHeight, "px")
     }
-  })));
+  }))));
 }
 var _default = exports.default = VirtualizedList;
