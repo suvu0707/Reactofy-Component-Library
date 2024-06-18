@@ -11,7 +11,7 @@ function App() {
         {/* <p className='container title'> */}
         {/* <Combobox multiSelect  valueKey={"value"} labelKey={"label"} containerWidth={200}  options={comboAOptions} getSelectedOptions={onSelectedItem} /> */}
         <br/>
-        <Combobox valueKey={"value"} labelKey={"label"} iconWidth={30} search containerWidth={220} containerHeight={200}  options={comboAOptions} getSelectedOptions={onSelectedItem} />
+        <Combobox search multiSelect  valueKey={"value"} labelKey={"label"} iconWidth={30} containerWidth={220} containerHeight={200}  options={comboAOptions} getSelectedOptions={onSelectedItem} />
   
         
     </div>

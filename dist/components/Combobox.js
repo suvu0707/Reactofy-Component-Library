@@ -32,33 +32,32 @@ function Combobox(_ref) {
     iconWidth
   } = _ref;
   const [isOpen, setIsOpen] = (0, _react.useState)(false);
-  const [checked, setChecked] = (0, _react.useState)(false);
   const [selectedOptions, setSelectedOptions] = (0, _react.useState)([]);
-  const [selectedOption, setSelectedOption] = (0, _react.useState)(null);
+  const [enableValidation, setEnableValidation] = (0, _react.useState)(false);
   const [isToolTipOpen, setIsToolTipOpen] = (0, _react.useState)(false);
   const [loadedOptions, setLoadedOptions] = (0, _react.useState)([]);
   const [searchInput, setSearchInput] = (0, _react.useState)("");
   const containerRef = (0, _react.useRef)(null);
-  const isMounted = (0, _react.useRef)(true);
   const modifiedOptions = options === null || options === void 0 ? void 0 : options.map(obj => ({
     value: obj[valueKey],
     label: obj[labelKey]
   }));
   (0, _react.useEffect)(() => {
-    setLoadedOptions(modifiedOptions ? modifiedOptions : []);
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
+    setLoadedOptions(modifiedOptions || []);
   }, [options]);
   (0, _react.useEffect)(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen]);
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prev => !prev);
+    if (!isOpen && selectedOptions.length === 0) {
+      setEnableValidation(true);
+    }
   };
   const handleOptionClick = option => {
     setIsToolTipOpen(false);
@@ -72,22 +71,24 @@ function Combobox(_ref) {
       setSelectedOptions([option]);
       setIsOpen(false);
     }
+
+    // Check if there are any selected options, if not, enable validation
+    setEnableValidation(selectedOptions.length === 1 && selectedOptions[0] === option);
   };
   const handleClickOutside = event => {
-    setSearchInput("");
     if (containerRef.current && !containerRef.current.contains(event.target) && event.target !== containerRef.current.previousSibling) {
       setIsOpen(false);
+      setSearchInput("");
     }
   };
-  const filteredOptions = loadedOptions.filter(option => {
+  const filteredOptions = loadedOptions === null || loadedOptions === void 0 ? void 0 : loadedOptions.filter(option => {
     var _option$label;
     return (_option$label = option.label) === null || _option$label === void 0 ? void 0 : _option$label.toLowerCase().startsWith(searchInput === null || searchInput === void 0 ? void 0 : searchInput.toLowerCase());
   });
-  const optionsForMultiSelect = selectedOptions.length > 0 ? selectedOptions.map(item => item.label).join(", ") : "Select an item";
-  const optionsForSingleSelect = selectedOption ? selectedOption.label : "Select an item";
+  const optionsForMultiSelect = (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.length) > 0 ? selectedOptions.map(item => item.label).join(", ") : "Select an item";
   const contHeight = containerHeight || 200;
   const optHeight = optionHeight || 24;
-  const totalOptionsHeight = Math.min(filteredOptions.length * optHeight, contHeight);
+  const totalOptionsHeight = Math.min((filteredOptions === null || filteredOptions === void 0 ? void 0 : filteredOptions.length) * optHeight, contHeight);
   const toggleIconWidth = iconWidth || 24;
   const handleToolTipOpen = () => {
     if (!isOpen && selectedOptions.length === 0) {
@@ -114,7 +115,7 @@ function Combobox(_ref) {
     onClick: toggleDropdown,
     style: {
       width: "".concat(containerWidth ? containerWidth : 145, "px"),
-      border: "1.5px solid ".concat(!isOpen && selectedOptions.length === 0 ? "red" : "blue"),
+      border: "1.5px solid ".concat(enableValidation ? "red" : "blue"),
       position: "relative",
       display: "flex",
       alignItems: "center",
@@ -129,12 +130,13 @@ function Combobox(_ref) {
       textOverflow: "ellipsis",
       width: "".concat(containerWidth - toggleIconWidth - 10, "px")
     }
-  }, multiSelect ? optionsForMultiSelect : optionsForSingleSelect), /*#__PURE__*/_react.default.createElement("div", {
+  }, optionsForMultiSelect), /*#__PURE__*/_react.default.createElement("div", {
     onClick: toggleDropdown,
     style: {
       cursor: "pointer"
     }
   }, /*#__PURE__*/_react.default.createElement(_ArrowDropDown.default, {
+    onClick: toggleDropdown,
     style: {
       transform: !isOpen ? "rotate(0deg)" : "rotate(180deg)",
       fill: "white",
@@ -145,7 +147,7 @@ function Combobox(_ref) {
       width: toggleIconWidth,
       right: 0,
       bottom: 0,
-      borderRadius: "0 3px 3px 0 !important"
+      borderRadius: "0 3px 3px 0"
     }
   })), isToolTipOpen && /*#__PURE__*/_react.default.createElement(_ToolTip.default, {
     stopPropagation: stopPropagation
@@ -157,7 +159,6 @@ function Combobox(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement(_VirtualizedList.default, {
     multiSelect: multiSelect,
-    checked: checked,
     items: filteredOptions,
     selectedOptions: selectedOptions,
     optionHeight: optHeight,

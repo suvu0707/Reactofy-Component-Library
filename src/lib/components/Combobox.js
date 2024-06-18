@@ -16,14 +16,12 @@ function Combobox({
   iconWidth,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [enableValidation, setEnableValidation] = useState(false);
   const [isToolTipOpen, setIsToolTipOpen] = useState(false);
   const [loadedOptions, setLoadedOptions] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const containerRef = useRef(null);
-  const isMounted = useRef(true);
 
   const modifiedOptions = options?.map((obj) => ({
     value: obj[valueKey],
@@ -31,22 +29,23 @@ function Combobox({
   }));
 
   useEffect(() => {
-    setLoadedOptions(modifiedOptions ? modifiedOptions : []);
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
+    setLoadedOptions(modifiedOptions || []);
   }, [options]);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [isOpen]);
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
+    if (!isOpen && selectedOptions.length === 0) {
+      setEnableValidation(true);
+    }
   };
 
   const handleOptionClick = (option) => {
@@ -61,35 +60,36 @@ function Combobox({
       setSelectedOptions([option]);
       setIsOpen(false);
     }
+  
+    // Check if there are any selected options, if not, enable validation
+    setEnableValidation(selectedOptions.length === 1 && selectedOptions[0] === option);
   };
+  
 
   const handleClickOutside = (event) => {
-    setSearchInput("");
     if (
       containerRef.current &&
       !containerRef.current.contains(event.target) &&
       event.target !== containerRef.current.previousSibling
     ) {
       setIsOpen(false);
+      setSearchInput("");
     }
   };
 
-  const filteredOptions = loadedOptions.filter((option) =>
+  const filteredOptions = loadedOptions?.filter((option) =>
     option.label?.toLowerCase().startsWith(searchInput?.toLowerCase())
   );
 
   const optionsForMultiSelect =
-    selectedOptions.length > 0
+    selectedOptions?.length > 0
       ? selectedOptions.map((item) => item.label).join(", ")
       : "Select an item";
-  const optionsForSingleSelect = selectedOption
-    ? selectedOption.label
-    : "Select an item";
 
   const contHeight = containerHeight || 200;
   const optHeight = optionHeight || 24;
   const totalOptionsHeight = Math.min(
-    filteredOptions.length * optHeight,
+    filteredOptions?.length * optHeight,
     contHeight
   );
 
@@ -121,9 +121,7 @@ function Combobox({
         onClick={toggleDropdown}
         style={{
           width: `${containerWidth ? containerWidth : 145}px`,
-          border: `1.5px solid ${
-            !isOpen && selectedOptions.length === 0 ? "red" : "blue"
-          }`,
+          border: `1.5px solid ${enableValidation ? "red" : "blue"}`,
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -140,10 +138,11 @@ function Combobox({
             width: `${containerWidth - toggleIconWidth - 10}px`,
           }}
         >
-          {multiSelect ? optionsForMultiSelect : optionsForSingleSelect}
+          {optionsForMultiSelect}
         </div>
         <div onClick={toggleDropdown} style={{ cursor: "pointer" }}>
           <ArrowDropDownIcon
+                  onClick={toggleDropdown}
             style={{
               transform: !isOpen ? "rotate(0deg)" : "rotate(180deg)",
               fill: "white",
@@ -154,7 +153,7 @@ function Combobox({
               width: toggleIconWidth,
               right: 0,
               bottom: 0,
-              borderRadius: "0 3px 3px 0 !important",
+              borderRadius: "0 3px 3px 0",
             }}
           />
         </div>
@@ -168,7 +167,6 @@ function Combobox({
         >
           <VirtualizedList
             multiSelect={multiSelect}
-            checked={checked}
             items={filteredOptions}
             selectedOptions={selectedOptions}
             optionHeight={optHeight}
