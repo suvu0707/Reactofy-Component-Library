@@ -106,7 +106,6 @@ export function FilterRendererWithSvg(
               <form
                 style={{
                   width: "200px",
-
                   padding: "10px 10px",
                   background: "white",
                   borderRadius: "6px",

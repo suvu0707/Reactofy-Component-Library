@@ -16,10 +16,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-
-
 # Expose the port that nginx will run on
-EXPOSE 5000
+EXPOSE 3000
 
-# Start nginx
-CMD ["npm","start"]
+# Start the application
+CMD ["npm", "start"]

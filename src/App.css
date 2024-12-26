@@ -30,13 +30,13 @@ body {
 }
 
 /* App styles */
-.App {
+/* .App {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f9f9f9;
-}
+} */
 
 /* Combobox styles */
 .large-combobox {
